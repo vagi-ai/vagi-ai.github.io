@@ -61,6 +61,9 @@
     <ul class="toc-list">
       <li><a href="#introduction">Introduction</a></li>
     </ul>
+    <ul class="toc-list">
+      <li><a href="#Image-Editing">Image Editing</a></li>
+    </ul>
   </div>
 
 <!-- Links. -->
@@ -200,7 +203,121 @@
 <!-- </div>
 </section> -->
 
+  <section class="section" id="Image-Editing">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h1 class="title is-2">Image Editing</h1>
+          <h3 class="title is-4">Add Text behind Object</h3>
+          <div class="content has-text-justified">
+            <div id="geometry_vae-ours">
+              <div class="row">
+                  <div class="col-md-8 offset-md-2">
+                      <!-- This table is the main display area for the three images -->
+                      <table style="margin-left: auto; margin-right: auto; width: 100%;">
+                          <thead>
+                              <tr>
+                                  <th style="text-align: center;width: 33.3%;">Original</th>
+                                  <th style="text-align: center;width: 33.3%;">Nano Banana</th>
+                                  <th style="text-align: center;width: 33.3%;">Vagi-AI</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <!-- These image tags have IDs so the javascript can find them -->
+                                  <td><img id="original_image" class="card-img pill-main-display-img" src="" alt="Original"></td>
+                                  <td><img id="gmeini_image" class="card-img pill-main-display-img" src="" alt="Gmeini"></td>
+                                  <td><img id="vagi_image" class="card-img pill-main-display-img" src="" alt="Vagi"></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <p id="prompt-text" class="prompt-display"></p>
+                      
+                  </div>
 
+                  <!-- This is the row of thumbnails to select an example -->
+                   
+                  <div class="pill-row scene-pills" id="cameratime-pills" role="group">
+                    <div class="pill scene-pill" data-value="test2">
+                          <img class="card-img" src="static/images/add_text_behind_object/test2.png">
+                      </div>
+                      <div class="pill scene-pill" data-value="test1">
+                          <img class="card-img" src="static/images/add_text_behind_object/test1.png">
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+          <br><br>
+
+          <script>
+
+                  const imageSources = {
+                      'test2': {
+                          prompt: 'Add <b>Golden days</b>  text behind the people',
+                          original: 'static/images/add_text_behind_object/test2.png',
+                          gmeini: 'static/images/add_text_behind_object/test2_nanobanana.png',
+                          vagi: 'static/images/add_text_behind_object/test2_vagi.png',
+                      },
+                      'test1': {
+                          prompt: "Add <b>San Francisco</b>  text behind the person with camera",
+                           original: 'static/images/add_text_behind_object/test1.png',
+                          gmeini: 'static/images/add_text_behind_object/test1_nanobanana.png',
+                          vagi: 'static/images/add_text_behind_object/test1_vagi.png',
+                      }
+                  };
+
+                  const compareDiv = document.querySelector("#geometry_vae-ours");
+                  let activeScene = "test2"; 
+
+                  const scenePills = compareDiv.querySelectorAll(".scene-pill");
+                  
+                  // Get references to the display elements
+                  const originalImage = compareDiv.querySelector('#original_image');
+                  const gmeiniImage = compareDiv.querySelector('#gmeini_image');
+                  const vagiImage = compareDiv.querySelector('#vagi_image');
+                  // NEW: Get a reference to the prompt text element
+                  const promptTextElement = compareDiv.querySelector('#prompt-text');
+
+                  // Add a click listener to every pill
+                  for (const scenePill of scenePills) {
+                      scenePill.addEventListener('click', function () {
+                          activeScene = this.getAttribute('data-value');
+                          updateDisplay();
+                      });
+                  }
+
+                  function updateDisplay() {
+                      // Highlight the active pill
+                      for (const scenePill of scenePills) {
+                          if (scenePill.getAttribute('data-value') === activeScene) {
+                              scenePill.classList.add('active');
+                          } else {
+                              scenePill.classList.remove('active');
+                          }
+                      }
+
+                      const sources = imageSources[activeScene];
+
+                      if (sources) {
+                          // Update the source for all three images
+                          originalImage.src = sources.original;
+                          gmeiniImage.src = sources.gmeini;
+                          vagiImage.src = sources.vagi;
+
+                          // NEW: Update the prompt text content
+                          promptTextElement.innerHTML = `Prompt: ${sources.prompt}`;;
+                      }
+                  }
+
+                  // Update initial display when the page first loads
+                  updateDisplay();
+              </script>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <footer class="footer">
   <div class="container">
