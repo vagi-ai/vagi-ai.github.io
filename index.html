@@ -148,7 +148,6 @@
   <div class="container is-max-desktop">
     <div class="content has-text-centered">
       <img src="static\images\vagi-arch.svg" width="100%">
-      <div class="content has-text-justified"></div>
       <p >
           VAGI (Vision AI for General Intelligence) aims to extend the capabilities of multimodal large language models (MLLMs) beyond conventional tasks such as video/image summarization and question answering. The focus is on enabling deeper reasoning, tool use, and dynamic strategy adaptation for visual understanding, depending on the context, use case, and input. By pushing MLLMs past static interpretation, the project explores pathways toward achieving general Vision intelligence.
       </p>
@@ -204,122 +203,89 @@
 </section> -->
 
 <!-- Image Editing Section -->
-<section class="section" id="Image-Editing">
-  <div class="container">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h1 class="title is-2">Image Editing</h1>
+<section class="section" id="Image-Editing" >
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+        <h1 class="title is-2">Image Understanding</h1>
         <h3 class="title is-4">Add Text behind Object</h3>
-        <div class="content has-text-justified">
-          <div id="geometry_vae-ours">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <!-- This table is the main display area for the three images -->
-                    <table style="margin-left: auto; margin-right: auto; width: 100%;">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center;width: 33.3%;">Original</th>
-                                <th style="text-align: center;width: 33.3%;">Nano Banana</th>
-                                <th style="text-align: center;width: 33.3%;">Vagi-AI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <!-- These image tags have IDs so the javascript can find them -->
-                                <td><img id="original_image" class="card-img pill-main-display-img" src="" alt="Original"></td>
-                                <td><img id="gmeini_image" class="card-img pill-main-display-img" src="" alt="Gmeini"></td>
-                                <td><img id="vagi_image" class="card-img pill-main-display-img" src="" alt="Vagi"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p id="prompt-text" class="prompt-display"></p>
-                    
+        
+          <div class="dynamic-image">
+            <img id="original_image" src="" >
+          </div>
+            <div class="pill-row scene-pills" id="cameratime-pills" role="group">
+                <!-- FIX: Wrapped the pill images in 'figure' elements as well -->
+                <div class="pill scene-pill" data-value="test2">
+                   
+                        <img class="card-img" src="static\images\add_text_behind_object\test2.avif" alt="Test 2">
+                   
                 </div>
+                <div class="pill scene-pill" data-value="test1">
+                        <img class="card-img" src="static/images/add_text_behind_object/test1.avif" alt="Test 1">
 
-                <!-- This is the row of thumbnails to select an example -->
-                  
-                <div class="pill-row scene-pills" id="cameratime-pills" role="group">
-                  <div class="pill scene-pill" data-value="test2">
-                        <img class="card-img" src="static/images/add_text_behind_object/test2.avif">
-                    </div>
-                    <div class="pill scene-pill" data-value="test1">
-                        <img class="card-img" src="static/images/add_text_behind_object/test1.avif">
-                    </div>
-                    
                 </div>
             </div>
-        </div>
-        <br><br>
+        
+      </div>
+  </div>
 
-        <script>
+<script>
+            const imageSources = {
+          'test2': {
+              original: 'static/images/add_text_behind_object/t11.png',
+          },
+          'test1': {
+              original: 'static/images/add_text_behind_object/t22.png',
+          }
+      };
 
-                const imageSources = {
-                    'test2': {
-                        prompt: 'Add <b>Golden days</b>  text behind the people',
-                        original: 'static/images/add_text_behind_object/test2.avif',
-                        gmeini: 'static/images/add_text_behind_object/test2_nanobanana.avif',
-                        vagi: 'static/images/add_text_behind_object/test2_vagi.avif',
-                    },
-                    'test1': {
-                        prompt: "Add <b>San Francisco</b>  text behind the person with camera",
-                          original: 'static/images/add_text_behind_object/test1.avif',
-                        gmeini: 'static/images/add_text_behind_object/test1_nanobanana.avif',
-                        vagi: 'static/images/add_text_behind_object/test1_vagi.avif',
-                    }
-                };
+      const compareDiv = document.querySelector(".dynamic-image");
+      let activeScene = "test2";
 
-                const compareDiv = document.querySelector("#geometry_vae-ours");
-                let activeScene = "test2"; 
+      // Correctly select all elements with the class "scene-pill" from the document
+      const scenePills = document.querySelectorAll(".scene-pill");
+      const originalImage = document.querySelector('#original_image');
 
-                const scenePills = compareDiv.querySelectorAll(".scene-pill");
-                
-                // Get references to the display elements
-                const originalImage = compareDiv.querySelector('#original_image');
-                const gmeiniImage = compareDiv.querySelector('#gmeini_image');
-                const vagiImage = compareDiv.querySelector('#vagi_image');
-                // NEW: Get a reference to the prompt text element
-                const promptTextElement = compareDiv.querySelector('#prompt-text');
+      for (const scenePill of scenePills) {
+          scenePill.addEventListener('click', function () {
+              activeScene = this.getAttribute('data-value');
+              updateDisplay();
+          });
+      }
 
-                // Add a click listener to every pill
-                for (const scenePill of scenePills) {
-                    scenePill.addEventListener('click', function () {
-                        activeScene = this.getAttribute('data-value');
-                        updateDisplay();
-                    });
-                }
+      function updateDisplay() {
+          for (const scenePill of scenePills) {
+              if (scenePill.getAttribute('data-value') === activeScene) {
+                  scenePill.classList.add('active');
+              } else {
+                  scenePill.classList.remove('active');
+              }
+          }
 
-                function updateDisplay() {
-                    // Highlight the active pill
-                    for (const scenePill of scenePills) {
-                        if (scenePill.getAttribute('data-value') === activeScene) {
-                            scenePill.classList.add('active');
-                        } else {
-                            scenePill.classList.remove('active');
-                        }
-                    }
+          const sources = imageSources[activeScene];
 
-                    const sources = imageSources[activeScene];
+          if (sources) {
+              originalImage.src = sources.original;
+          }
+      }
 
-                    if (sources) {
-                        // Update the source for all three images
-                        originalImage.src = sources.original;
-                        gmeiniImage.src = sources.gmeini;
-                        vagiImage.src = sources.vagi;
+      updateDisplay();
+  </script>
 
-                        // NEW: Update the prompt text content
-                        promptTextElement.innerHTML = `Prompt: ${sources.prompt}`;;
-                    }
-                }
-
-                // Update initial display when the page first loads
-                updateDisplay();
-            </script>  
-        </div>
+  <div class="container is-max-desktop">
+    <div class="container is-max-desktop">
+      <div class="content has-text-centered">
+        <h3 class="title is-3">Object Level Reasoning</h3>
+          <img src="static\images\pixel_object_level_reasoning\pixel level reasoning.svg" alt="Object Level Reasoning">
+          <div class="content has-text-justified">
+            <p>
+              In complex scenes, traditional multimodal models often miss fine-grained details — for example, miscounting objects or overlooking attributes like clothing color. Object-level reasoning overcomes this by analyzing each object individually, reasoning about its attributes, relationships, and interactions with other objects. This enables the model to extract richer and more accurate information, such as correctly identifying the number of cars, detecting people wearing specific clothes, or distinguishing between drivers and cyclists. Such detailed understanding is essential for applications in surveillance, autonomous driving, medical imaging, and any domain where precision and context matter
+            </p>
+          </div>
       </div>
     </div>
   </div>
 </section>
-
+         
 <footer class="footer">
   <div class="container">
     <div class="columns is-centered">
