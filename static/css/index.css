@@ -195,9 +195,9 @@ body {
 
 .scene-pill:hover {
   transition: transform 0.3s;
-  width: 80px;
+  
   border-radius: 5px;
-  scale: 1.1;
+  scale: 1.0;
   transition: scale 0.1s;
 }
 

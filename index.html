@@ -207,77 +207,12 @@
 
 <!-- Image Editing Section -->
 <section class="section" id="Image-Editing" style = "margin-bottom: -2rem;">
-  <div class="container is-max-desktop">
-    <div class="content has-text-centered">
-        <h1 class="title is-2">Image Understanding</h1>
-        <h3 class="title is-4">Add Text behind Object</h3>
-        
-          <div class="dynamic-image">
-            <img id="original_image" src="" >
-          </div>
-            <div class="pill-row scene-pills" id="cameratime-pills" role="group">
-                <!-- FIX: Wrapped the pill images in 'figure' elements as well -->
-                <div class="pill scene-pill" data-value="test2">
-                   
-                        <img class="card-img" src="static\images\add_text_behind_object\test2.avif" alt="Test 2">
-                   
-                </div>
-                <div class="pill scene-pill" data-value="test1">
-                        <img class="card-img" src="static/images/add_text_behind_object/test1.avif" alt="Test 1">
-
-                </div>
-            </div>
-            <br>
-        
-      </div>
-  </div>
-
-<script>
-            const imageSources = {
-          'test2': {
-              original: 'static/images/add_text_behind_object/t11.png',
-          },
-          'test1': {
-              original: 'static/images/add_text_behind_object/t22.png',
-          }
-      };
-
-      const compareDiv = document.querySelector(".dynamic-image");
-      let activeScene = "test2";
-
-      // Correctly select all elements with the class "scene-pill" from the document
-      const scenePills = document.querySelectorAll(".scene-pill");
-      const originalImage = document.querySelector('#original_image');
-
-      for (const scenePill of scenePills) {
-          scenePill.addEventListener('click', function () {
-              activeScene = this.getAttribute('data-value');
-              updateDisplay();
-          });
-      }
-
-      function updateDisplay() {
-          for (const scenePill of scenePills) {
-              if (scenePill.getAttribute('data-value') === activeScene) {
-                  scenePill.classList.add('active');
-              } else {
-                  scenePill.classList.remove('active');
-              }
-          }
-
-          const sources = imageSources[activeScene];
-
-          if (sources) {
-              originalImage.src = sources.original;
-          }
-      }
-
-      updateDisplay();
-  </script>
-
+  
+  <!-- Object Level Reasoning -->
   <div class="container is-max-desktop">
     <div class="container is-max-desktop">
       <div class="content has-text-centered">
+        <h1 class="title is-2">Image Understanding</h1>
         <h3 class="title is-3">Object Level Reasoning</h3>
           <img src="static\images\pixel_object_level_reasoning\pixel level reasoning.svg" alt="Object Level Reasoning">
           <div class="content has-text-justified">
@@ -290,23 +225,159 @@
     </div>
   </div>
 
-
-  <div class="container is-max-desktop">
+  <br>
+  <!-- Spatial Reasoning -->
+  <div>
     <div class="container is-max-desktop">
       <div class="content has-text-centered">
-        <h3 class="title is-3">Spatial Reasoning</h3>
+
+          <h3 class="title is-3">Spatial Reasoning</h3>
+
+            <div class="splatial_reasoning_dynamic-image">
+              <img id="splatial_reasoning_original_image" src="" >
+            </div>
+              <div class="pill-row scene-pills" id="cameratime-pills" role="group">
+                  <!-- FIX: Wrapped the pill images in 'figure' elements as well -->
+                  <div class="pill scene-pill spatial_reasoning" data-value="test1">
+                    
+                          <img class="card-img" src="static/images/spatial_reasoning/test_1.png" alt="Test 2">
+                    
+                  </div>
+                  <div class="pill scene-pill spatial_reasoning" data-value="test2">
+                          <img class="card-img" src="static/images/spatial_reasoning/test_2.png" alt="Test 1">
+
+                  </div>
+                  <div class="pill scene-pill spatial_reasoning" data-value="test3">
+                          <img class="card-img" src="static/images/spatial_reasoning/test_3.png" alt="Test 1">
+
+                  </div>
+              </div>
+              <br>
           
-          <div class="content is-text-centered">
-            <p>
-             Coming Soon...
-            </p>
-          </div>
-      </div>
+        </div>
     </div>
+
+    <script>
+                const spatial_reasoning_sources = {
+              'test1': {
+                  original: 'static/images/spatial_reasoning/spatial_reasoning_test_1.svg',
+              },
+              'test2': {
+                  original: 'static/images/spatial_reasoning/spatial_reasoning_test_2.svg',
+              },
+              'test3': {
+                  original: 'static/images/spatial_reasoning/spatial_reasoning_test_3.svg',
+              }
+          };
+
+          const spatial_reasoning_compareDiv = document.querySelector(".splatial_reasoning_dynamic-image");
+          let spatial_reasoning_activeScene = "test1";
+
+          // Correctly select all elements with the class "scene-pill" from the document
+          const spatial_reasoning_scenePills = document.querySelectorAll(".spatial_reasoning");
+          const spatial_reasoning_originalImage = document.querySelector('#splatial_reasoning_original_image');
+
+          for (const scenePill of spatial_reasoning_scenePills) {
+              scenePill.addEventListener('click', function () {
+                  spatial_reasoning_activeScene = this.getAttribute('data-value');
+                  updateSpatialReasoningDisplay();
+              });
+          }
+
+          function updateSpatialReasoningDisplay() {
+              for (const scenePill of spatial_reasoning_scenePills) {
+                  if (scenePill.getAttribute('data-value') === spatial_reasoning_activeScene) {
+                      scenePill.classList.add('active');
+                  } else {
+                      scenePill.classList.remove('active');
+                  }
+              }
+
+              const sources = spatial_reasoning_sources[spatial_reasoning_activeScene];
+
+              if (sources) {
+                  spatial_reasoning_originalImage.src = spatial_reasoning_sources[spatial_reasoning_activeScene].original;
+              }
+          }
+
+          updateSpatialReasoningDisplay();
+    </script>
+  </div>
+  
+   <br>
+  <!-- Add Text behind object-->
+  <div>
+    <div class="container is-max-desktop">
+      <div class="content has-text-centered">
+          
+          <h3 class="title is-3">Add Text behind Object</h3>
+          
+            <div class="dynamic-image">
+              <img id="text_behind_object_original_image" src="" >
+            </div>
+              <div class="pill-row scene-pills" id="cameratime-pills" role="group">
+                  <!-- FIX: Wrapped the pill images in 'figure' elements as well -->
+                  <div class="pill scene-pill text_behind_object" data-value="test2">
+                    
+                          <img class="card-img" src="static\images\add_text_behind_object\test2.avif" alt="Test 2">
+                    
+                  </div>
+                  <div class="pill scene-pill text_behind_object" data-value="test1">
+                          <img class="card-img" src="static/images/add_text_behind_object/test1.avif" alt="Test 1">
+
+                  </div>
+              </div>
+              <br>
+          
+        </div>
+    </div>
+
+    <script>
+                const imageSources = {
+              'test2': {
+                  original: 'static/images/add_text_behind_object/t11.png',
+              },
+              'test1': {
+                  original: 'static/images/add_text_behind_object/t22.png',
+              }
+          };
+
+          const compareDiv = document.querySelector(".dynamic-image");
+          let activeScene = "test2";
+
+          // Correctly select all elements with the class "scene-pill" from the document
+          const scenePills = document.querySelectorAll(".text_behind_object");
+          const originalImage = document.querySelector('#text_behind_object_original_image');
+
+          for (const scenePill of scenePills) {
+              scenePill.addEventListener('click', function () {
+                  activeScene = this.getAttribute('data-value');
+                  updateDisplay();
+              });
+          }
+
+          function updateDisplay() {
+              for (const scenePill of scenePills) {
+                  if (scenePill.getAttribute('data-value') === activeScene) {
+                      scenePill.classList.add('active');
+                  } else {
+                      scenePill.classList.remove('active');
+                  }
+              }
+
+              const sources = imageSources[activeScene];
+
+              if (sources) {
+                  originalImage.src = sources.original;
+              }
+          }
+
+          updateDisplay();
+    </script>
   </div>
 
   <br>
-
+  
   <div class="container is-max-desktop">
     <div class="container is-max-desktop">
       <div class="content has-text-centered">
@@ -324,7 +395,6 @@
   </div>
 
   <br>
-
   <div class="container is-max-desktop">
     <div class="container is-max-desktop">
       <div class="content has-text-centered">
