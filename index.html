@@ -404,17 +404,71 @@
   <div class="container is-max-desktop">
     <div class="container is-max-desktop">
       <div class="content has-text-centered">
-        <h3 class="title is-3">Text to Image Edit</h3>
           
-          <div class="content is-text-centered">
-            <p>
-             Coming Soon...
-             
-            </p>
-            
-          </div>
-      </div>
+          <h3 class="title is-3">Add Text behind Object</h3>
+          
+            <div class="dynamic-image">
+              <img id="text_to_edit_original_image" src="" >
+            </div>
+              <div class="pill-row scene-pills" id="cameratime-pills" role="group">
+                  <!-- FIX: Wrapped the pill images in 'figure' elements as well -->
+                  <div class="pill scene-pill text_to_edit" data-value="test2">
+
+                          <img class="card-img" src="static/images/text_to_edit/text_to_edit_gt_1.png" alt="Test 2">
+
+                  </div>
+                  <div class="pill scene-pill text_to_edit" data-value="test1">
+                          <img class="card-img" src="static/images/text_to_edit/text_to_edit_gt_2.png" alt="Test 1">
+
+                  </div>
+              </div>
+              <br>
+          
+        </div>
     </div>
+
+    <script>
+                const text_to_edit_imageSources = {
+              'test2': {
+                  original: 'static/images/text_to_edit/text_to_edit_1.png',
+              },
+              'test1': {
+                  original: 'static/images/text_to_edit/text_to_edit_2_1.png',
+              }
+          };
+
+          const text_to_edit_compareDiv = document.querySelector(".dynamic-image");
+          let text_to_edit_activeScene = "test2";
+
+          // Correctly select all elements with the class "scene-pill" from the document
+          const text_to_edit_scenePills = document.querySelectorAll(".text_to_edit");
+          const text_to_edit_originalImage = document.querySelector('#text_to_edit_original_image');
+
+          for (const scenePill of text_to_edit_scenePills) {
+              scenePill.addEventListener('click', function () {
+                  text_to_edit_activeScene = this.getAttribute('data-value');
+                  updateDisplay();
+              });
+          }
+
+          function updateDisplay() {
+              for (const scenePill of scenePills) {
+                  if (scenePill.getAttribute('data-value') === activeScene) {
+                      scenePill.classList.add('active');
+                  } else {
+                      scenePill.classList.remove('active');
+                  }
+              }
+
+              const sources = text_to_edit_imageSources[text_to_edit_activeScene];
+
+              if (sources) {
+                  text_to_edit_originalImage.src = sources.original;
+              }
+          }
+
+          updateDisplay();
+    </script>
   </div>
   
   <br>
